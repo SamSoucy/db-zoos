@@ -23,6 +23,19 @@ router.get('/', (req, res) => {
     })
 });
 
+//************Find a Bear with a specific id*****************/
+
+router.get('/:id', (req, res) => {
+    db("bears")
+      .where({ id: req.params.id })
+      .then(bear => {
+      res.status(200).json(bear)
+      })
+      .catch(err => {
+      res.status(500).json(err)
+    })
+  });
+
 
 
 

@@ -11,6 +11,8 @@ const knexConfig = {
   
 const db = knex(knexConfig)
 
+//*****************Return a list of Zoos****************/
+
 router.get('/', (req, res) => {
     db("zoos")
       .then(zoos => {
@@ -20,6 +22,8 @@ router.get('/', (req, res) => {
       res.status(500).json(error)
     })
 });
+
+//************Find a zoo with a specific id*****************/
 
 router.get('/:id', (req, res) => {
     db("zoos")
@@ -32,6 +36,8 @@ router.get('/:id', (req, res) => {
     })
   });
   
+//****************Add a new zoo to the list******************/
+
   router.post('/', (req, res) => {
     db('zoos')
     .insert(req.body)
@@ -47,6 +53,8 @@ router.get('/:id', (req, res) => {
       res.status(500).json({message: "could not add new zoo"});
     })
   });
+
+//****************Update a zoo in the list***************/
 
   router.put('/:id', (req, res) => {
    db('zoos')
@@ -68,6 +76,8 @@ router.get('/:id', (req, res) => {
       res.status(500).json(error)
     })
   });
+
+//******************Delete a zoo in the list******************/
 
 router.delete('/:id', (req, res) => {
       const id =req.params.id

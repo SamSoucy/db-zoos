@@ -33,7 +33,6 @@ router.get('/:id', (req, res) => {
   });
   
   router.post('/', (req, res) => {
-    // add a role to the database
     db('zoos')
     .insert(req.body)
     .then(([id]) => {
@@ -49,6 +48,26 @@ router.get('/:id', (req, res) => {
     })
   });
 
+  router.put('/:id', (req, res) => {
+   db('zoos')
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(response => {
+      if(response > 0) {
+        db('zoos')
+        .where({ id: req.params.id })
+        .first()
+        .then(response => {
+          res.status(200).json(response)
+        })
+      } else {
+        res.status(404).json({ message: 'Zoo not found' })
+      }
+    })
+    .catch(error => {
+      res.status(500).json(error)
+    })
+  });
 
 
 module.exports = router;

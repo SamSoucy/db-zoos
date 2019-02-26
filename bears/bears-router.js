@@ -75,7 +75,26 @@ router.put('/:id', (req, res) => {
      .catch(error => {
        res.status(500).json(error)
      })
-   });
+});
+   
+//******************Delete a bear in the list******************/
+
+router.delete('/:id', (req, res) => {
+    const id =req.params.id
+  db("bears")
+    .where({ id })
+    .del()
+    .then(response => {
+      if (response > 0) {
+        res.status(204).end()
+      } else {
+        res.status(404).json({message:"That bear could not be found"})
+      }
+    })
+    .catch(err => {
+    res.status(500).json(err)
+  })
+});
 
 
 

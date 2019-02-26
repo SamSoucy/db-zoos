@@ -34,6 +34,24 @@ router.get('/:id', (req, res) => {
       .catch(err => {
       res.status(500).json(err)
     })
+});
+  
+//****************Add a new Bear to the list******************/
+
+router.post('/', (req, res) => {
+    db('bears')
+    .insert(req.body)
+    .then(([id]) => {
+      db('bears')
+      .where({ id })
+      .first()
+      .then(bear => {
+        res.status(200).json(bear);
+      })
+    })
+    .catch(err => {
+      res.status(500).json({message: "could not add new bear"});
+    })
   });
 
 

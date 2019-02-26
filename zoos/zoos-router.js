@@ -69,5 +69,22 @@ router.get('/:id', (req, res) => {
     })
   });
 
+router.delete('/:id', (req, res) => {
+      const id =req.params.id
+    db("zoos")
+      .where({ id })
+      .del()
+      .then(response => {
+        if (response > 0) {
+          res.status(204).end()
+        } else {
+          res.status(404).json({message:"That zoo could not be found"})
+        }
+      })
+      .catch(err => {
+      res.status(500).json(err)
+    })
+  });
+
 
 module.exports = router;
